@@ -18,19 +18,22 @@ namespace EquipmentAPI.Entities
         public string InternalSerial { get; set; } = string.Empty;
 
         public EquipmentBrand Brand { get; set; }
-         
+
         public EquipmentType EquipmentType { get; set; }
 
         public Guid? SupplierId { get; set; }
-        
+
         public Supplier? Supplier { get; set; }
 
         public Guid? TechnicalInformationId { get; set; }
         public TechnicalInformation? TechnicalInformation { get; set; }
 
+        public Guid? MaintenanceRecordId { get; set; }
+        public MaintenanceRecord? MaintenanceRecord { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Price {  get; set; }
+        public decimal Price { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]
@@ -42,7 +45,11 @@ namespace EquipmentAPI.Entities
         [NotMapped]
         public decimal TotalPrice => Price + Expenses + ShippingPrice;
 
-        public DateTime ManufactureDate { get; set; }
+        [Range(1900, 9999, ErrorMessage = "Year of manufacture must be after 1900.")]
+        public int ManufactureDate { get; set; }
+
+        [Required]
+        public EquipmentStatus EquipmentStatus { get; set; } = EquipmentStatus.Available;
 
         public DateTime PurchaseDate { get; set; }
 
