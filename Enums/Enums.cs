@@ -154,4 +154,11 @@ namespace EquipmentAPI.Enums
         [Description("Meters per Second (m/s)")]
         Mps
     }
+
+    public enum EquipmentStatus
+    {
+        Available,
+        Sold,
+        Rented
+    }
 }
