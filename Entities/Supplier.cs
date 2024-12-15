@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentAPI.Entities
 {
@@ -16,7 +17,7 @@ namespace EquipmentAPI.Entities
 
         [Required]
         [Phone]
-        public string PhoneNumber { get; set; } = string.Empty;
+        public List<string> PhoneNumbers { get; set; } = new List<string>();
 
         [Required]
         [EmailAddress]
@@ -24,7 +25,14 @@ namespace EquipmentAPI.Entities
 
         [Required]
         [StringLength(50)]
-        public string Address { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(50)]
+        public string City { get; set; } = string.Empty;
+
+        [NotMapped]
+        public string Address => $"{City}, {Country}";
 
         public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
 
