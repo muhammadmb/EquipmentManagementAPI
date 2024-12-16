@@ -30,17 +30,9 @@ C:\Users\Blu-Ray\source\repos\EquipmentAPI\obj\Debug\net8.0\refint\EquipmentAPI.
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\obj\Debug\net8.0\EquipmentAPI.pdb
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\obj\Debug\net8.0\EquipmentAPI.genruntimeconfig.cache
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\obj\Debug\net8.0\ref\EquipmentAPI.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\AutoMapper.EF6.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Azure.Identity.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\DelegateDecompiler.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\DelegateDecompiler.EntityFramework.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\EntityFramework.SqlServer.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\EntityFramework.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Humanizer.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.Build.Locator.dll
@@ -76,7 +68,6 @@ C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.IdentityMo
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Mono.Reflection.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.ClientModel.dll
@@ -87,7 +78,6 @@ C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Composition.H
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Composition.Runtime.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Composition.TypedParts.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Data.SqlClient.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Drawing.Common.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\System.Formats.Asn1.dll
@@ -172,11 +162,6 @@ C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-arm64\n
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\Blu-Ray\source\repos\EquipmentAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
