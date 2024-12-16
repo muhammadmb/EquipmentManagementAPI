@@ -14,10 +14,10 @@ namespace EquipmentAPI.Entities
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(6)]
+        [StringLength(12)]
         public string InternalSerial { get; set; } = string.Empty;
 
-        public EquipmentBrand Brand { get; set; }
+        public EquipmentBrand EquipmentBrand { get; set; }
 
         public EquipmentType EquipmentType { get; set; }
 
@@ -28,8 +28,7 @@ namespace EquipmentAPI.Entities
         public Guid? TechnicalInformationId { get; set; }
         public TechnicalInformation? TechnicalInformation { get; set; }
 
-        public Guid? MaintenanceRecordId { get; set; }
-        public MaintenanceRecord? MaintenanceRecord { get; set; }
+        public List<MaintenanceRecord>? MaintenanceRecords { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]

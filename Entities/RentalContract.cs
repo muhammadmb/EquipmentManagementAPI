@@ -23,8 +23,10 @@ namespace EquipmentAPI.Entities
         public DateTimeOffset EndDate { get; set; }
         
         [Required]
+        [Range(0, 1000)]
         public int Shifts{ get; set; }
 
+        [Column(TypeName = "decimal(7,2)")]
         public decimal ShiftPrice {  get; set; }
 
         [NotMapped]
