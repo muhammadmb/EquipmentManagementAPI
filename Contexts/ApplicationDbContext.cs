@@ -25,6 +25,9 @@ namespace EquipmentAPI.Contexts
 
         public DbSet<MaintenanceRecord> MaintenanceRecords { get; set; }
 
+        public DbSet<CustomerPhoneNumber> CustomerPhoneNumbers { get; set; }
+        public DbSet<SupplierPhoneNumber> SupplierPhoneNumbers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Equipment>().HasQueryFilter(e => e.DeletedDate == null);
@@ -34,6 +37,8 @@ namespace EquipmentAPI.Contexts
             modelBuilder.Entity<RentalContract>().HasQueryFilter(r => r.DeletedDate == null);
             modelBuilder.Entity<SellingContract>().HasQueryFilter(se => se.DeletedDate == null);
             modelBuilder.Entity<MaintenanceRecord>().HasQueryFilter(ma => ma.DeletedDate == null);
+            modelBuilder.Entity<CustomerPhoneNumber>().HasQueryFilter(cpn => cpn.DeletedDate == null);
+            modelBuilder.Entity<SupplierPhoneNumber>().HasQueryFilter(spn => spn.DeletedDate == null);
 
             modelBuilder.Entity<Equipment>()
                 .HasMany<MaintenanceRecord>(e => e.MaintenanceRecords)
@@ -109,6 +114,18 @@ namespace EquipmentAPI.Contexts
                 v => v.ToString(),
                 v => (SpeedUnit)Enum.Parse(typeof(SpeedUnit), v)
             );
+
+            modelBuilder.Entity<CustomerPhoneNumber>()
+                .HasOne(cpn => cpn.Customer)
+                .WithMany(c => c.PhoneNumbers)
+                .HasForeignKey(cpn => cpn.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SupplierPhoneNumber>()
+                .HasOne(spn => spn.Supplier)
+                .WithMany(s => s.PhoneNumbers)
+                .HasForeignKey(spn => spn.SupplierId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
     }

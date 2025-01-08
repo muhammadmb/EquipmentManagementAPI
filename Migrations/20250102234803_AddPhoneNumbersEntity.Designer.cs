@@ -4,6 +4,7 @@ using EquipmentAPI.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250102234803_AddPhoneNumbersEntity")]
+    partial class AddPhoneNumbersEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,35 +62,6 @@ namespace EquipmentAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("EquipmentAPI.Entities.CustomerPhoneNumber", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("AddedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("DeletedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("UpdateDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("CustomerPhoneNumbers");
                 });
 
             modelBuilder.Entity("EquipmentAPI.Entities.Equipment", b =>
@@ -192,6 +166,47 @@ namespace EquipmentAPI.Migrations
                     b.HasIndex("EquipmentId");
 
                     b.ToTable("MaintenanceRecords");
+                });
+
+            modelBuilder.Entity("EquipmentAPI.Entities.PhoneNumber", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("AddedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("DeletedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EntityType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("UpdateDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PhoneNumbers");
                 });
 
             modelBuilder.Entity("EquipmentAPI.Entities.RentalContract", b =>
@@ -315,35 +330,6 @@ namespace EquipmentAPI.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("EquipmentAPI.Entities.SupplierPhoneNumber", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("AddedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset?>("DeletedDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SupplierId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("UpdateDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("SupplierPhoneNumbers");
-                });
-
             modelBuilder.Entity("EquipmentAPI.Entities.TechnicalInformation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -410,17 +396,6 @@ namespace EquipmentAPI.Migrations
                     b.ToTable("TechnicalInformation");
                 });
 
-            modelBuilder.Entity("EquipmentAPI.Entities.CustomerPhoneNumber", b =>
-                {
-                    b.HasOne("EquipmentAPI.Entities.Customer", "Customer")
-                        .WithMany("PhoneNumbers")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("EquipmentAPI.Entities.Equipment", b =>
                 {
                     b.HasOne("EquipmentAPI.Entities.Supplier", "Supplier")
@@ -439,6 +414,17 @@ namespace EquipmentAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Equipment");
+                });
+
+            modelBuilder.Entity("EquipmentAPI.Entities.PhoneNumber", b =>
+                {
+                    b.HasOne("EquipmentAPI.Entities.Customer", null)
+                        .WithMany("PhoneNumbers")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("EquipmentAPI.Entities.Supplier", null)
+                        .WithMany("PhoneNumbers")
+                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("EquipmentAPI.Entities.RentalContract", b =>
@@ -477,17 +463,6 @@ namespace EquipmentAPI.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Equipment");
-                });
-
-            modelBuilder.Entity("EquipmentAPI.Entities.SupplierPhoneNumber", b =>
-                {
-                    b.HasOne("EquipmentAPI.Entities.Supplier", "Supplier")
-                        .WithMany("PhoneNumbers")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("EquipmentAPI.Entities.TechnicalInformation", b =>
