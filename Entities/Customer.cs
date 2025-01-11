@@ -14,7 +14,7 @@ namespace EquipmentAPI.Entities
 
         [Required]
         [Phone]
-        public List<string> PhoneNumbers { get; set; } = new List<string>();
+        public List<CustomerPhoneNumber> PhoneNumbers { get; set; } = new();
 
         [Required]
         [EmailAddress]

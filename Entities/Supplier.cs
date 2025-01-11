@@ -7,17 +7,17 @@ namespace EquipmentAPI.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        
+
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string ContactPerson { get; set; } = string.Empty ;
+        public string ContactPerson { get; set; } = string.Empty;
 
         [Required]
         [Phone]
-        public List<string> PhoneNumbers { get; set; } = new List<string>();
+        public List<SupplierPhoneNumber> PhoneNumbers { get; set; } = new();
 
         [Required]
         [EmailAddress]
