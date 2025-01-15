@@ -73,6 +73,14 @@ namespace EquipmentAPI.Contexts
                 v => (EquipmentStatus)Enum.Parse(typeof(EquipmentStatus), v)
             );
 
+            modelBuilder.Entity<Equipment>()
+            .Property(e => e.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<TechnicalInformation>()
+            .Property(t => t.RowVersion)
+            .IsRowVersion();
+
             modelBuilder.Entity<TechnicalInformation>()
             .Property(e => e.EnginePowerUnit)
             .HasConversion(
@@ -116,6 +124,10 @@ namespace EquipmentAPI.Contexts
             );
 
             modelBuilder.Entity<CustomerPhoneNumber>()
+            .Property(cpn => cpn.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<CustomerPhoneNumber>()
                 .HasOne(cpn => cpn.Customer)
                 .WithMany(c => c.PhoneNumbers)
                 .HasForeignKey(cpn => cpn.CustomerId)
@@ -127,6 +139,29 @@ namespace EquipmentAPI.Contexts
                 .HasForeignKey(spn => spn.SupplierId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<SupplierPhoneNumber>()
+            .Property(spn => spn.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<Supplier>()
+            .Property(s => s.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<Customer>()
+            .Property(c => c.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<MaintenanceRecord>()
+            .Property(mr => mr.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<SellingContract>()
+            .Property(sc => sc.RowVersion)
+            .IsRowVersion();
+
+            modelBuilder.Entity<RentalContract>()
+            .Property(rc => rc.RowVersion)
+            .IsRowVersion();
         }
     }
 }

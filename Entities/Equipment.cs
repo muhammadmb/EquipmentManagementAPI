@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentAPI.Entities
 {
-    public class Equipment
+    public class Equipment : BasicEntity
     {
-        [Key]
-        public Guid Id { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -51,11 +49,5 @@ namespace EquipmentAPI.Entities
         public EquipmentStatus EquipmentStatus { get; set; } = EquipmentStatus.Available;
 
         public DateTime PurchaseDate { get; set; }
-
-        public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
-
-        public DateTimeOffset? DeletedDate { get; set; }
-
-        public DateTimeOffset? UpdateDate { get; set; }
     }
 }

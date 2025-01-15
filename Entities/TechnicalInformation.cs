@@ -5,11 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentAPI.Entities
 {
-    public class TechnicalInformation
+    public class TechnicalInformation : BasicEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public Guid EquipmentId { get; set; }
         public Equipment? Equipment{ get; set; }
@@ -41,11 +38,5 @@ namespace EquipmentAPI.Entities
         public int? MaxSpeed { get; set; }
         
         public SpeedUnit SpeedUnit { get; set; }
-
-        public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
-
-        public DateTimeOffset? DeletedDate { get; set; }
-
-        public DateTimeOffset? UpdateDate { get; set; }
     }
 }

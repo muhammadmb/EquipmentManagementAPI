@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentAPI.Entities
 {
-    public class Supplier
+    public class Supplier : BasicEntity
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string Name { get; set; } = string.Empty;
@@ -33,11 +30,5 @@ namespace EquipmentAPI.Entities
 
         [NotMapped]
         public string Address => $"{City}, {Country}";
-
-        public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
-
-        public DateTimeOffset? DeletedDate { get; set; }
-
-        public DateTimeOffset? UpdateDate { get; set; }
     }
 }

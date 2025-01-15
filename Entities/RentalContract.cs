@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EquipmentAPI.Entities
 {
-    public class RentalContract
-    {
-        [Key]
-        public Guid Id { get; set; }
-        
+    public class RentalContract : BasicEntity
+    {        
         [Required]
         public Guid EquipmentId { get; set; }
         public Equipment? Equipment { get; set; }
@@ -31,11 +28,5 @@ namespace EquipmentAPI.Entities
 
         [NotMapped]
         public decimal RentalPrice => Shifts * ShiftPrice;
-
-        public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
-
-        public DateTimeOffset? DeletedDate { get; set; }
-
-        public DateTimeOffset? UpdateDate { get; set; }
     }
 }
