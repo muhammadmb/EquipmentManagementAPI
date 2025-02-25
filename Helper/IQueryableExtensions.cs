@@ -1,4 +1,4 @@
-﻿using System.Dynamic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -21,6 +21,25 @@ namespace EquipmentAPI.Helper
                 .MakeGenericMethod(entityType, property.PropertyType);
 
             return (IQueryable<T>)orderByMethod.Invoke(null, new object[] { source, orderByExpression });
+        }
+
+        public static IQueryable<T> ApplyInclude<T>(this IQueryable<T> source, string fields) where T : class
+        {
+            if (string.IsNullOrWhiteSpace(fields)) return source;
+
+            var fieldsList = fields.Split(',').Select(f => f.Trim()).ToList();
+
+            var entityType = typeof(T);
+            var navProperties =
+                entityType.GetProperties()
+                .Where(p => p.PropertyType.IsClass && p.PropertyType != typeof(string) && p.PropertyType != typeof(byte[])).ToList();
+
+            foreach (var property in navProperties)
+            {
+                if (fieldsList.Contains(property.Name, StringComparer.OrdinalIgnoreCase)) source = source.Include(property.Name);
+            }
+
+            return source;
         }
     }
 }
