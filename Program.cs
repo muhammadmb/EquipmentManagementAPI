@@ -18,6 +18,8 @@ builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>()
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(
         x =>
