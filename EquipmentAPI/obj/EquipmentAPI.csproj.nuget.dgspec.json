@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentAPI\\EquipmentAPI.csproj": {}
+    "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentManagementAPI\\EquipmentAPI\\EquipmentAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentAPI\\EquipmentAPI.csproj": {
+    "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentManagementAPI\\EquipmentAPI\\EquipmentAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentAPI\\EquipmentAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentManagementAPI\\EquipmentAPI\\EquipmentAPI.csproj",
         "projectName": "EquipmentAPI",
-        "projectPath": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentAPI\\EquipmentAPI.csproj",
+        "projectPath": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentManagementAPI\\EquipmentAPI\\EquipmentAPI.csproj",
         "packagesPath": "C:\\Users\\Blu-Ray\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentAPI\\obj\\",
+        "outputPath": "C:\\Users\\Blu-Ray\\source\\repos\\EquipmentManagementAPI\\EquipmentAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Blu-Ray\\AppData\\Roaming\\NuGet\\NuGet.Config",
