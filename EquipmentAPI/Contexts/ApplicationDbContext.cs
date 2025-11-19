@@ -124,6 +124,10 @@ namespace EquipmentAPI.Contexts
             );
 
             modelBuilder.Entity<CustomerPhoneNumber>()
+                .HasIndex(s => s.Number)
+                .IsUnique();
+
+            modelBuilder.Entity<CustomerPhoneNumber>()
             .Property(cpn => cpn.RowVersion)
             .IsRowVersion();
 
@@ -132,6 +136,10 @@ namespace EquipmentAPI.Contexts
                 .WithMany(c => c.PhoneNumbers)
                 .HasForeignKey(cpn => cpn.CustomerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SupplierPhoneNumber>()
+                .HasIndex(s => s.Number)
+                .IsUnique();
 
             modelBuilder.Entity<SupplierPhoneNumber>()
                 .HasOne(spn => spn.Supplier)
@@ -147,9 +155,21 @@ namespace EquipmentAPI.Contexts
             .Property(s => s.RowVersion)
             .IsRowVersion();
 
+            modelBuilder.Entity<Supplier>()
+                .HasMany(s => s.PhoneNumbers)
+                .WithOne(p => p.Supplier)
+                .HasForeignKey(p => p.SupplierId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Customer>()
             .Property(c => c.RowVersion)
             .IsRowVersion();
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(s => s.PhoneNumbers)
+                .WithOne(p => p.Customer)
+                .HasForeignKey(p => p.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MaintenanceRecord>()
             .Property(mr => mr.RowVersion)
