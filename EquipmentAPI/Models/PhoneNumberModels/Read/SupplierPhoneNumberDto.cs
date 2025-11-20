@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace EquipmentAPI.Models.PhoneNumberModels.Read
+﻿namespace EquipmentAPI.Models.PhoneNumberModels.Read
 {
     public class SupplierPhoneNumberDto
     {
@@ -13,5 +11,7 @@ namespace EquipmentAPI.Models.PhoneNumberModels.Read
         public DateTimeOffset AddedDate { get; set; } = DateTimeOffset.Now;
 
         public DateTimeOffset? UpdateDate { get; set; }
+
+        public byte[] RowVersion { get; set; }
     }
 }
