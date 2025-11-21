@@ -1,5 +1,6 @@
 using EquipmentAPI.Contexts;
 using EquipmentAPI.Repositories.Equipment_Repository;
+using EquipmentAPI.Repositories.SupplierRepository;
 using EquipmentAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
 builder.Services.AddMemoryCache();
 
