@@ -29,12 +29,12 @@ namespace EquipmentAPI.Repositories.SupplierRepository
 
             if (!string.IsNullOrWhiteSpace(parameters.FilterByCountry))
             {
-                Collection = Collection.Where(s => s.Country == parameters.FilterByCountry);
+                Collection = Collection.Where(s => s.Country.ToLowerInvariant() == parameters.FilterByCountry);
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.FilterByCity))
             {
-                Collection = Collection.Where(s => s.City == parameters.FilterByCity);
+                Collection = Collection.Where(s => s.City.ToLowerInvariant() == parameters.FilterByCity);
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.SearchQuery))
@@ -115,7 +115,8 @@ namespace EquipmentAPI.Repositories.SupplierRepository
                         {
                             Number = phone.Number,
                             SupplierId = currentSupplier.Id,
-                            AddedDate = DateTime.Now
+                            AddedDate = DateTime.Now,
+                            RowVersion = [1, 1, 1, 1]
                         });
                     }
                 }
@@ -125,7 +126,8 @@ namespace EquipmentAPI.Repositories.SupplierRepository
                     {
                         Number = phone.Number,
                         SupplierId = currentSupplier.Id,
-                        AddedDate = DateTime.Now
+                        AddedDate = DateTime.Now,
+                        RowVersion = [1, 1, 1, 1]
                     });
                 }
             }
@@ -177,7 +179,8 @@ namespace EquipmentAPI.Repositories.SupplierRepository
                     {
                         SupplierId = supplierId,
                         Number = dnumber.Number,
-                        AddedDate = DateTime.Now
+                        AddedDate = DateTime.Now,
+                        RowVersion = [1, 1, 1, 1]
                     });
                 }
             }
@@ -206,6 +209,7 @@ namespace EquipmentAPI.Repositories.SupplierRepository
         {
             var supplier = await _context.Suppliers
                 .IgnoreQueryFilters()
+                .Include(s => s.PhoneNumbers)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (supplier == null || supplier.DeletedDate == null) return false;
