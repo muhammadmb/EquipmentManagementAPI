@@ -1,4 +1,5 @@
 using EquipmentAPI.Contexts;
+using EquipmentAPI.Repositories.Customer_Repository;
 using EquipmentAPI.Repositories.Equipment_Repository;
 using EquipmentAPI.Repositories.SupplierRepository;
 using EquipmentAPI.Services;
@@ -19,6 +20,7 @@ builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>()
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 builder.Services.AddMemoryCache();
 
