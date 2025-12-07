@@ -2,7 +2,6 @@
 using EquipmentAPI.Entities;
 using EquipmentAPI.Helper;
 using EquipmentAPI.Helper.BulkOperations;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
 using EquipmentAPI.ResourceParameters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -25,8 +24,6 @@ namespace EquipmentAPI.Repositories.Customer_Repository
 
         public async Task<PagedList<Customer>> GetCustomers(CustomerResourceParameters parameters)
         {
-            ArgumentNullException.ThrowIfNull(parameters);
-
             string cacheKey = $"Customer_{JsonSerializer.Serialize(parameters)}";
             if (_cache.TryGetValue(cacheKey, out PagedList<Customer>? cachedResult))
                 return cachedResult!;
@@ -74,7 +71,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
             return result;
         }
 
-        public async Task<Customer> GetCustomerById(Guid id, string fields)
+        public async Task<Customer> GetCustomerById(Guid id, string? fields)
         {
             ArgumentNullException.ThrowIfNull(id);
 
@@ -105,7 +102,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
 
         public async Task<IEnumerable<Customer>> GetCustomersByIds(IEnumerable<Guid> ids, string? fields)
         {
-            if (ids == null || !ids.Any()) return Enumerable.Empty<Customer>();
+            if (ids == null || !ids.Any()) return [];
 
             IQueryable<Customer> collection = _context.Customers.AsQueryable();
 
@@ -119,7 +116,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
             return await collection.ToListAsync();
         }
 
-        public async Task<Customer?> GetCustomerByEmail(string email, string fields)
+        public async Task<Customer?> GetCustomerByEmail(string email, string? fields)
         {
             ArgumentNullException.ThrowIfNull(email);
 
@@ -187,7 +184,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
         {
             return await _context.Customers.AnyAsync(c => c.Id == id);
         }
-        
+
         public async Task<bool> EmailExists(string email)
         {
             return await _context.Customers
@@ -209,9 +206,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
             var currentCustomer = await _context
                 .Customers
                 .Include(c => c.PhoneNumbers)
-                .AsTracking()
                 .FirstOrDefaultAsync(c => c.Id == customer.Id);
-
             if (currentCustomer == null) return;
 
             if (!currentCustomer.RowVersion.SequenceEqual(customer.RowVersion))
@@ -219,99 +214,38 @@ namespace EquipmentAPI.Repositories.Customer_Repository
                 throw new DbUpdateConcurrencyException("The entity has been modified by another user.");
             }
 
-            var distinctNumbers = customer.PhoneNumbers
-                .GroupBy(pn => pn.Number)
-                .Select(n => n.First())
-                .ToList();
-
-            foreach (var phone in currentCustomer.PhoneNumbers)
-            {
-                if (!distinctNumbers.Any(pn => pn.Id == phone.Id))
-                {
-                    phone.DeletedDate = DateTime.Now;
-                }
-            }
-            foreach (var phone in customer.PhoneNumbers)
-            {
-                if (phone.Id != Guid.Empty)
-                {
-                    var existing = currentCustomer.PhoneNumbers.FirstOrDefault(p => p.Id == phone.Id);
-                    if (existing != null)
-                    {
-                        existing.Number = phone.Number;
-                        existing.UpdateDate = DateTime.Now;
-                    }
-                    else
-                    {
-                        currentCustomer.PhoneNumbers.Add(new CustomerPhoneNumber
-                        {
-                            Number = phone.Number,
-                            CustomerId = currentCustomer.Id,
-                            AddedDate = DateTime.Now,
-                            RowVersion = [1, 1, 1, 1]
-                        });
-                    }
-                }
-                else
-                {
-                    currentCustomer.PhoneNumbers.Add(new CustomerPhoneNumber
-                    {
-                        Number = phone.Number,
-                        CustomerId = currentCustomer.Id,
-                        AddedDate = DateTime.Now,
-                        RowVersion = [1, 1, 1, 1]
-                    });
-                }
-            }
-
-            currentCustomer.Name = customer.Name;
-            currentCustomer.Email = customer.Email;
-            currentCustomer.City = customer.City;
-            currentCustomer.Country = customer.Country;
-            currentCustomer.UpdateDate = DateTime.Now;
+            _context.Customers.Update(customer);
         }
 
-        public async Task UpdatePhoneNumber(Guid customerId, List<CustomerPhoneNumberUpdateDto> phonenumbers)
+        public async Task<CustomerPhoneNumber?> GetPhoneNumber(Guid id)
         {
-            var customer = await _context.Customers
-                .Include(c => c.PhoneNumbers)
-                .IgnoreQueryFilters()
-                .AsTracking()
-                .FirstOrDefaultAsync(c => c.Id == customerId);
+            if (id == Guid.Empty)
+                throw new ArgumentException("Phone number id cannot be empty", nameof(id));
 
-            var distinctNumbers = phonenumbers
-                .GroupBy(c => c.Number)
-                .Select(n => n.First())
-                .ToList();
+            return await _context.CustomerPhoneNumbers.FirstOrDefaultAsync(cpn => cpn.Id == id);
+        }
 
-            foreach (var dNumber in distinctNumbers)
+        public async Task UpdatePhoneNumber(
+            Guid customerId,
+            Guid phoneNumberId,
+            CustomerPhoneNumber phoneNumber)
+        {
+            var currentPhoneNumber =
+                await _context.CustomerPhoneNumbers
+                .FirstOrDefaultAsync(e => e.Id == phoneNumber.Id);
+
+            if (!currentPhoneNumber.RowVersion.SequenceEqual(phoneNumber.RowVersion))
             {
-                var existing = customer.PhoneNumbers
-                    .FirstOrDefault(pn => pn.Id == dNumber.Id);
-
-                if (existing != null)
-                {
-                    if (!existing.RowVersion.SequenceEqual(dNumber.RowVersion))
-                        throw new DbUpdateConcurrencyException("The entity has been modified by another user.");
-                    if (existing.Number != dNumber.Number)
-
-                    {
-                        existing.UpdateDate = DateTime.Now;
-                        existing.Number = dNumber.Number;
-                        existing.DeletedDate = null;
-                    }
-                }
-                else
-                {
-                    customer.PhoneNumbers.Add(new CustomerPhoneNumber
-                    {
-                        CustomerId = customerId,
-                        Number = dNumber.Number,
-                        AddedDate = DateTime.Now,
-                        RowVersion = [1, 1, 1, 1]
-                    });
-                }
+                throw new DbUpdateConcurrencyException("The entity has been modified by another user.");
             }
+            phoneNumber.UpdateDate = DateTime.Now;
+            _context.CustomerPhoneNumbers.Update(phoneNumber);
+        }
+
+        public void CreateCustomerPhoneNumber(Guid customerId, CustomerPhoneNumber phoneNumber)
+        {
+            phoneNumber.CustomerId = customerId;
+            _context.CustomerPhoneNumbers.Add(phoneNumber);
         }
 
         public async Task DeleteCustomer(Guid id)
@@ -359,7 +293,7 @@ namespace EquipmentAPI.Repositories.Customer_Repository
                 .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(c => c.Id == phoneId);
 
-            if (customerPhoneNumber == null || customerPhoneNumber.DeletedDate != null) return false;
+            if (customerPhoneNumber == null || customerPhoneNumber.DeletedDate == null) return false;
 
             customerPhoneNumber.DeletedDate = null;
             _context.CustomerPhoneNumbers.Update(customerPhoneNumber);

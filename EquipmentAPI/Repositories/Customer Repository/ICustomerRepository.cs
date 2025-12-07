@@ -1,7 +1,6 @@
 ﻿using EquipmentAPI.Entities;
 using EquipmentAPI.Helper;
 using EquipmentAPI.Helper.BulkOperations;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
 using EquipmentAPI.ResourceParameters;
 
 namespace EquipmentAPI.Repositories.Customer_Repository
@@ -34,7 +33,11 @@ namespace EquipmentAPI.Repositories.Customer_Repository
 
         Task UpdateCustomer(Customer customer);
 
-        Task UpdatePhoneNumber(Guid customerId, List<CustomerPhoneNumberUpdateDto> phonenumbers);
+        Task<CustomerPhoneNumber?> GetPhoneNumber(Guid id);
+
+        Task UpdatePhoneNumber(Guid customerId, Guid phoneNumberId, CustomerPhoneNumber phonenumber);
+
+        void CreateCustomerPhoneNumber(Guid customerId, CustomerPhoneNumber phoneNumber);
 
         Task DeleteCustomer(Guid id);
 
