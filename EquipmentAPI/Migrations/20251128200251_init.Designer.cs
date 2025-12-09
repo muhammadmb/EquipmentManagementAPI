@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EquipmentAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251111103131_AddUniqueConstraintsToPhoneNumber")]
-    partial class AddUniqueConstraintsToPhoneNumber
+    [Migration("20251128200251_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

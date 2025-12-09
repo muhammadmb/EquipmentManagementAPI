@@ -16,14 +16,14 @@ namespace EquipmentAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumbers = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,17 +37,40 @@ namespace EquipmentAPI.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ContactPerson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumbers = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Suppliers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerPhoneNumbers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerPhoneNumbers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CustomerPhoneNumbers_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +92,8 @@ namespace EquipmentAPI.Migrations
                     PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,6 +103,29 @@ namespace EquipmentAPI.Migrations
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SupplierPhoneNumbers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SupplierPhoneNumbers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SupplierPhoneNumbers_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Suppliers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +140,8 @@ namespace EquipmentAPI.Migrations
                     Technician = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,10 +164,11 @@ namespace EquipmentAPI.Migrations
                     StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Shifts = table.Column<int>(type: "int", nullable: false),
-                    ShiftPrice = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    ShiftPrice = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,7 +198,8 @@ namespace EquipmentAPI.Migrations
                     SaleDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,7 +237,8 @@ namespace EquipmentAPI.Migrations
                     SpeedUnit = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AddedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,6 +250,17 @@ namespace EquipmentAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerPhoneNumbers_CustomerId",
+                table: "CustomerPhoneNumbers",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomerPhoneNumbers_Number",
+                table: "CustomerPhoneNumbers",
+                column: "Number",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Equipments_SupplierId",
@@ -231,6 +293,17 @@ namespace EquipmentAPI.Migrations
                 column: "EquipmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SupplierPhoneNumbers_Number",
+                table: "SupplierPhoneNumbers",
+                column: "Number",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SupplierPhoneNumbers_SupplierId",
+                table: "SupplierPhoneNumbers",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TechnicalInformation_EquipmentId",
                 table: "TechnicalInformation",
                 column: "EquipmentId",
@@ -241,6 +314,9 @@ namespace EquipmentAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CustomerPhoneNumbers");
+
+            migrationBuilder.DropTable(
                 name: "MaintenanceRecords");
 
             migrationBuilder.DropTable(
@@ -248,6 +324,9 @@ namespace EquipmentAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sellings");
+
+            migrationBuilder.DropTable(
+                name: "SupplierPhoneNumbers");
 
             migrationBuilder.DropTable(
                 name: "TechnicalInformation");
