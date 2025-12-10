@@ -48,8 +48,8 @@ namespace EquipmentAPI.Repositories.Customer_Repository
             if (!string.IsNullOrEmpty(parameters.SearchQuery))
             {
                 collection = collection.Where(c
-                    => EF.Functions.Like(c.Name, parameters.SearchQuery) ||
-                    EF.Functions.Like(c.Email, parameters.SearchQuery));
+                    => EF.Functions.Like(c.Name, $"%{parameters.SearchQuery}%") ||
+                    EF.Functions.Like(c.Email, $"%{parameters.SearchQuery}%"));
             }
 
             if (!string.IsNullOrEmpty(parameters.SortBy))
@@ -244,6 +244,10 @@ namespace EquipmentAPI.Repositories.Customer_Repository
 
         public void CreateCustomerPhoneNumber(Guid customerId, CustomerPhoneNumber phoneNumber)
         {
+            if(!_context.Customers.Any(c => c.Id == customerId))
+            {
+                throw new ArgumentException("Customer does not exist", nameof(customerId));
+            }
             phoneNumber.CustomerId = customerId;
             _context.CustomerPhoneNumbers.Add(phoneNumber);
         }
