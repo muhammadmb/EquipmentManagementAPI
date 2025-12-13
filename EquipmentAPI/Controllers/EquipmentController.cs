@@ -41,6 +41,11 @@ namespace EquipmentAPI.Controllers
                 return BadRequest("Some requested fields are invalid.");
             }
 
+            if (parameters.SortBy != null && !_propertyCheckerService.TypeHasProperties<EquipmentDto>(parameters.SortBy))
+            {
+                return BadRequest($"Sort by field is invalid");
+            }
+
             string cacheKey = $"equipment_{JsonSerializer.Serialize(parameters)}";
 
             if (!_cache.TryGetValue(cacheKey, out PagedList<Equipment> equipment))
