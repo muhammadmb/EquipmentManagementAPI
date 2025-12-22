@@ -1,18 +1,19 @@
-﻿using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Models.EquipmentModels.Read;
-using EquipmentAPI.Models.EquipmentModels.Write;
-using EquipmentAPI.Repositories.Equipment_Repository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
+﻿using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.EquipmentModels.Read;
+using Application.Models.EquipmentModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
 using Mapster;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Extensions;
+using Shared.Results;
 using System.Text.Json;
 
-namespace EquipmentAPI.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Route("api/Equipment")]

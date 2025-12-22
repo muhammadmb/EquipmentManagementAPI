@@ -1,21 +1,23 @@
-﻿using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Helper.BulkOperations;
-using EquipmentAPI.Models.CustomersModels.Read;
-using EquipmentAPI.Models.CustomersModels.Write;
-using EquipmentAPI.Models.PhoneNumberModels.Read;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
-using EquipmentAPI.Repositories.Customer_Repository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
+﻿using Application.BulkOperations;
+using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.CustomersModels.Read;
+using Application.Models.CustomersModels.Write;
+using Application.Models.PhoneNumberModels.Read;
+using Application.Models.PhoneNumberModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
+using EquipmentAPI.ModelBinders;
 using Mapster;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Shared.Extensions;
+using Shared.Results;
 using System.Data;
 using System.Text.Json;
 
-namespace EquipmentAPI.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Route("/api/customers")]
@@ -350,7 +352,7 @@ namespace EquipmentAPI.Controllers
 
             return NoContent();
         }
-        
+
         [HttpPost("{id}/restore")]
         public async Task<IActionResult> RestoreCustomer(Guid id)
         {

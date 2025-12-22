@@ -1,19 +1,20 @@
-﻿using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
-using EquipmentAPI.Models.SupplierModels.Read;
-using EquipmentAPI.Models.SupplierModels.Write;
-using EquipmentAPI.Repositories.SupplierRepository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
+﻿using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.PhoneNumberModels.Write;
+using Application.Models.SupplierModels.Read;
+using Application.Models.SupplierModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
 using Mapster;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Extensions;
+using Shared.Results;
 using System.Text.Json;
 
-namespace EquipmentAPI.Controllers
+namespace API.Controllers
 {
     [ApiController]
     [Route("api/Suppliers")]

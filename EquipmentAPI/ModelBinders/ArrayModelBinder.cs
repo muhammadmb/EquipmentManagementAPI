@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace EquipmentAPI.Helper
+namespace EquipmentAPI.ModelBinders
 {
     public class ArrayModelBinder : IModelBinder
     {

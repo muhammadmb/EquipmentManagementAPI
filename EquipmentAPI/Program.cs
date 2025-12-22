@@ -1,8 +1,8 @@
-using EquipmentAPI.Contexts;
-using EquipmentAPI.Repositories.Customer_Repository;
-using EquipmentAPI.Repositories.Equipment_Repository;
-using EquipmentAPI.Repositories.SupplierRepository;
-using EquipmentAPI.Services;
+using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Infrastructure.Contexts;
+using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -21,6 +21,7 @@ builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>()
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IRentalContractRepository, RentalContractRepository>();
 
 builder.Services.AddMemoryCache();
 
