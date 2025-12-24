@@ -27,7 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EquipmentAPI\EquipmentAPI.csproj" />
+    <ProjectReference Include="..\Equipment.Application\Application.csproj" />
+    <ProjectReference Include="..\Equipment.Domain\Domain.csproj" />
+    <ProjectReference Include="..\Equipment.Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\EquipmentAPI\API.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

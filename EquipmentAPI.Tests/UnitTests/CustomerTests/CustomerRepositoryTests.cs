@@ -1,14 +1,14 @@
-﻿using EquipmentAPI.Contexts;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Repositories.Customer_Repository;
-using EquipmentAPI.ResourceParameters;
+﻿using Application.ResourceParameters;
+using Domain.Entities;
 using FluentAssertions;
+using Infrastructure.Contexts;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Results;
 
-namespace EquipmentAPI.Tests.CustomerTests
+namespace EquipmentAPI.Tests.UnitTests.CustomerTests
 {
     public class CustomerRepositoryTests
     {
@@ -746,7 +746,7 @@ namespace EquipmentAPI.Tests.CustomerTests
             var ids = customers.Select(x => x.Id).ToList();
             _context.ChangeTracker.Clear();
             // Act
-           var result = await _customerRepository.DeleteCustomers(ids);
+            var result = await _customerRepository.DeleteCustomers(ids);
             await _customerRepository.SaveChangesAsync();
 
             // Assert
@@ -761,7 +761,7 @@ namespace EquipmentAPI.Tests.CustomerTests
         public async Task RestoreCustomers_RestoreCustomerInBulk()
         {
             // Arrange
-            var customers = new List<Customer>() { _customerAli};
+            var customers = new List<Customer>() { _customerAli };
             var ids = customers.Select(x => x.Id).ToList();
             _context.ChangeTracker.Clear();
 

@@ -1,19 +1,19 @@
-﻿using EquipmentAPI.Controllers;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Enums;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Models.EquipmentModels.Read;
-using EquipmentAPI.Models.EquipmentModels.Write;
-using EquipmentAPI.Repositories.Equipment_Repository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
+﻿using API.Controllers;
+using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.EquipmentModels.Read;
+using Application.Models.EquipmentModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
+using Domain.Enums;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-namespace EquipmentAPI.Tests.EquipmentTests
+using Shared.Results;
+namespace EquipmentAPI.Tests.UnitTests.EquipmentTests
 {
     public class EquipmentControllerTests
     {
@@ -39,6 +39,10 @@ namespace EquipmentAPI.Tests.EquipmentTests
 
             _mockRepo.Setup(repo => repo.GetEquipment(parameters)).ReturnsAsync(equipmentList);
             _mockPropertyChecker.Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.Fields)).Returns(true);
+
+            _mockPropertyChecker
+                .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.SortBy))
+                .Returns(true);
 
             // Mock the cache
             object cachedValue = null;
@@ -95,6 +99,10 @@ namespace EquipmentAPI.Tests.EquipmentTests
                 .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.Fields))
                 .Returns(true);
 
+            _mockPropertyChecker
+                .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.SortBy))
+                .Returns(true);
+
             var httpContext = new DefaultHttpContext();
             _controller.ControllerContext = new ControllerContext
             {
@@ -126,6 +134,10 @@ namespace EquipmentAPI.Tests.EquipmentTests
 
             _mockPropertyChecker
                 .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.Fields))
+                .Returns(true);
+
+            _mockPropertyChecker
+                .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.SortBy))
                 .Returns(true);
 
             // Mock the cache for TryGetValue (cache miss)
@@ -365,6 +377,10 @@ namespace EquipmentAPI.Tests.EquipmentTests
 
             _mockPropertyChecker
                 .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.Fields))
+                .Returns(true);
+
+            _mockPropertyChecker
+                .Setup(service => service.TypeHasProperties<EquipmentDto>(parameters.SortBy))
                 .Returns(true);
 
             // Mock the cache for TryGetValue (cache miss)

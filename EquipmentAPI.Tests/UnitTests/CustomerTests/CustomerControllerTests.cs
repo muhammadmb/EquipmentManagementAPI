@@ -1,13 +1,12 @@
-﻿using EquipmentAPI.Controllers;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Helper.BulkOperations;
-using EquipmentAPI.Models.CustomersModels.Read;
-using EquipmentAPI.Models.CustomersModels.Write;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
-using EquipmentAPI.Repositories.Customer_Repository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
+﻿using API.Controllers;
+using Application.BulkOperations;
+using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.CustomersModels.Read;
+using Application.Models.CustomersModels.Write;
+using Application.Models.PhoneNumberModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -15,9 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Shared.Results;
 using System.Dynamic;
 
-namespace EquipmentAPI.Tests.CustomerTests
+namespace EquipmentAPI.Tests.UnitTests.CustomerTests
 {
     public class CustomerControllerTests
     {

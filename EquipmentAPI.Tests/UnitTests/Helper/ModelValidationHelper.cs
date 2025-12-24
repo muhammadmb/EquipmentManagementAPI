@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace EquipmentAPI.Tests.Helper
+namespace EquipmentAPI.Tests.UnitTests.Helper
 {
     public static class ModelValidationHelper
     {

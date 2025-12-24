@@ -1,13 +1,13 @@
-﻿using EquipmentAPI.Contexts;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
-using EquipmentAPI.Repositories.SupplierRepository;
-using EquipmentAPI.ResourceParameters;
+﻿using Application.Models.PhoneNumberModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
 using FluentAssertions;
+using Infrastructure.Contexts;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Shared.Results;
 
-namespace EquipmentAPI.Tests.SupplierTests
+namespace EquipmentAPI.Tests.UnitTests.SupplierTests
 {
     public class SupplierRepositoryTests
     {
@@ -17,7 +17,7 @@ namespace EquipmentAPI.Tests.SupplierTests
         public SupplierRepositoryTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "supplierTestsDb")
+                .UseInMemoryDatabase(databaseName: $"{Guid.NewGuid().ToString()}_supplierTestsDb")
                 .Options;
             _context = new ApplicationDbContext(options);
             _repository = new SupplierRepository(_context);

@@ -1,10 +1,11 @@
-﻿using EquipmentAPI.Contexts;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Repositories.Equipment_Repository;
-using EquipmentAPI.ResourceParameters;
+﻿using Application.ResourceParameters;
+using Domain.Entities;
+using Domain.Enums;
+using Infrastructure.Contexts;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace EquipmentAPI.Tests.EquipmentTests
+namespace EquipmentAPI.Tests.UnitTests.EquipmentTests
 {
     public class EquipmentRepositoryTests : IDisposable
     {
@@ -29,7 +30,7 @@ namespace EquipmentAPI.Tests.EquipmentTests
             {
                 Id = Guid.NewGuid(),
                 Name = "Excavator",
-                EquipmentStatus = Enums.EquipmentStatus.Available,
+                EquipmentStatus = EquipmentStatus.Available,
                 RowVersion = new byte[] { 1, 2, 3, 4 }
             };
 
@@ -76,7 +77,7 @@ namespace EquipmentAPI.Tests.EquipmentTests
             {
                 Id = Guid.NewGuid(),
                 Name = "Bulldozer",
-                EquipmentStatus = Enums.EquipmentStatus.Available,
+                EquipmentStatus = EquipmentStatus.Available,
                 RowVersion = new byte[] { 1, 2, 3, 4 }
             };
 

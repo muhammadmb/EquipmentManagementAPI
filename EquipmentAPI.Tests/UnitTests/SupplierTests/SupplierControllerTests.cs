@@ -1,13 +1,12 @@
-﻿using EquipmentAPI.Controllers;
-using EquipmentAPI.Entities;
-using EquipmentAPI.Helper;
-using EquipmentAPI.Models.PhoneNumberModels.Write;
-using EquipmentAPI.Models.SupplierModels.Read;
-using EquipmentAPI.Models.SupplierModels.Write;
-using EquipmentAPI.Repositories.SupplierRepository;
-using EquipmentAPI.ResourceParameters;
-using EquipmentAPI.Services;
-using EquipmentAPI.Tests.Helper;
+﻿using API.Controllers;
+using Application.Interface.Repositories;
+using Application.Interface.Services;
+using Application.Models.PhoneNumberModels.Write;
+using Application.Models.SupplierModels.Read;
+using Application.Models.SupplierModels.Write;
+using Application.ResourceParameters;
+using Domain.Entities;
+using EquipmentAPI.Tests.UnitTests.Helper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -16,9 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Shared.Results;
 using System.Dynamic;
 
-namespace EquipmentAPI.Tests.SupplierTests
+namespace EquipmentAPI.Tests.UnitTests.SupplierTests
 {
     public class SupplierControllerTests
     {
