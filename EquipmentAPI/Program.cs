@@ -14,7 +14,9 @@ var configuration = builder.Configuration;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(configuration.GetConnectionString("ApplicationContext"));
+    options.UseSqlServer(
+        configuration.GetConnectionString("ApplicationContext"),
+        b => b.MigrationsAssembly("Infrastructure"));
 });
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
