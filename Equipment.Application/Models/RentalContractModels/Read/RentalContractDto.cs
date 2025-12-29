@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Models.CustomersModels.Read;
+using Application.Models.EquipmentModels.Read;
+using Domain.Enums;
 
 namespace Application.Models.RentalContractModels.Read
 {
@@ -6,15 +8,19 @@ namespace Application.Models.RentalContractModels.Read
     {
         public Guid Id { get; set; }
         public Guid EquipmentId { get; set; }
-        public Equipment? Equipment { get; set; }
+        public EquipmentForContractsDto? Equipment { get; set; }
 
         public Guid CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public CustomerForContractDto? Customer { get; set; }
 
         public DateTimeOffset StartDate { get; set; }
 
         public DateTimeOffset EndDate { get; set; }
+        public DateTimeOffset? CancelledDate { get; private set; } = null;
+        public DateTimeOffset? FinishedDate { get; private set; } = null;
+        public DateTimeOffset? SuspendedDate { get; private set; } = null;
 
+        public RentalContractStatus Status { get; private set; }
         public int Shifts { get; set; }
 
         public decimal ShiftPrice { get; set; }
