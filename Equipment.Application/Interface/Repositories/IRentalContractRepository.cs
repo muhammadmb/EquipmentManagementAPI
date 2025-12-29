@@ -11,6 +11,7 @@ namespace Application.Interface.Repositories
         RentalContractResourceParameters parameters);
 
         Task<RentalContract> GetRentalContractById(Guid id, string? fields);
+        Task<RentalContract> GetRentalContractForUpdate(Guid id, string? fields);
 
         Task<IEnumerable<RentalContract>> GetRentalContractsByCustomerId(Guid customerId, string? fields);
         Task<IEnumerable<RentalContract>> GetRentalContractsByEquipmentId(Guid equipmentId, string? fields);

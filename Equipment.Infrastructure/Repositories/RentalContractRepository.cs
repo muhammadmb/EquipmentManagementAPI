@@ -22,6 +22,9 @@ namespace Infrastructure.Repositories
 
         public async Task<PagedList<RentalContract>?> GetRentalContracts(RentalContractResourceParameters parameters)
         {
+            if (parameters == null)
+                throw new ArgumentNullException(nameof(parameters));
+
             IQueryable<RentalContract> collection = _context.RentalContracts.AsQueryable();
 
             if (!string.IsNullOrEmpty(parameters.Fields))
@@ -115,6 +118,25 @@ namespace Infrastructure.Repositories
             }
 
             var result = await collection
+                .FirstOrDefaultAsync(rc => rc.Id == id);
+
+            return result;
+        }
+
+        public async Task<RentalContract> GetRentalContractForUpdate(Guid id, string? fields)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Id cannot be empty", nameof(id));
+
+            IQueryable<RentalContract> collection = _context.RentalContracts.AsQueryable();
+
+            if (!string.IsNullOrEmpty(fields))
+            {
+                collection = collection.ApplyInclude(fields);
+            }
+
+            var result = await collection
+                .AsTracking()
                 .FirstOrDefaultAsync(rc => rc.Id == id);
 
             return result;
@@ -260,6 +282,7 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<RentalContract>> GetActiveContractsEndingBefore(DateTimeOffset date)
         {
             return await _context.RentalContracts
+                .AsTracking()
                 .Where(rc =>
                     rc.Status == RentalContractStatus.Active &&
                     rc.DeletedDate == null &&
