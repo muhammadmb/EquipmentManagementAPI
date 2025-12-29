@@ -25,6 +25,7 @@ builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IRentalContractRepository, RentalContractRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IRentalContractService, RentalContractService>();
 builder.Services.AddScoped<ICacheVersionProvider, CacheVersionProvider>();
 
 builder.Services.AddMemoryCache();
