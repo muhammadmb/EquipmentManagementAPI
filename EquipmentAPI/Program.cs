@@ -3,6 +3,7 @@ using Application.Interface.Services;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -26,6 +27,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IRentalContractRepository, RentalContractRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRentalContractService, RentalContractService>();
+builder.Services.AddScoped<IRentalContractAnalyticsService, RentalContractAnalyticsService>();
 builder.Services.AddScoped<ICacheVersionProvider, CacheVersionProvider>();
 
 builder.Services.AddMemoryCache();

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.0" />
   </ItemGroup>
 
 </Project>
