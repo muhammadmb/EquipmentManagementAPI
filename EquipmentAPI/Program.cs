@@ -30,6 +30,8 @@ builder.Services.AddScoped<IRentalContractService, RentalContractService>();
 builder.Services.AddScoped<IRentalContractAnalyticsService, RentalContractAnalyticsService>();
 builder.Services.AddScoped<ICacheVersionProvider, CacheVersionProvider>();
 
+builder.Services.AddHostedService<ContractExpirationWorker>();
+
 builder.Services.AddMemoryCache();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
