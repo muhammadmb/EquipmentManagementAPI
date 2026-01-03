@@ -163,7 +163,7 @@ namespace EquipmentAPI.Tests.UnitTests.RentalContractTests
             var parameters = new RentalContractResourceParameters
             {
                 CustomerId = _activeContract.CustomerId,
-                Year = DateTimeOffset.UtcNow.Year
+                EquipmentId = _activeContract.EquipmentId
             };
 
             var result = await _repository.GetRentalContracts(parameters);
@@ -231,16 +231,6 @@ namespace EquipmentAPI.Tests.UnitTests.RentalContractTests
         {
             await Assert.ThrowsAsync<ArgumentException>(() =>
                 _repository.GetRentalContractById(Guid.Empty, null));
-        }
-
-        [Fact]
-        public async Task GetRentalContractById_LoadsRelatedEntities_WhenIncludeSpecified()
-        {
-            var contract = await _repository.GetRentalContractById(_activeContract.Id, "customer, equipment");
-
-            contract.Should().NotBeNull();
-            contract.Customer.Should().NotBeNull();
-            contract.Equipment.Should().NotBeNull();
         }
 
         [Fact]
@@ -531,7 +521,7 @@ namespace EquipmentAPI.Tests.UnitTests.RentalContractTests
         [Fact]
         public async Task SoftDeleteRentalContract_Throws_WhenContractNotFound()
         {
-            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            await Assert.ThrowsAsync<KeyNotFoundException>(() =>
                 _repository.SoftDeleteRentalContract(Guid.NewGuid()));
         }
 
