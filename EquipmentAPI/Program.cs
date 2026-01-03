@@ -1,5 +1,10 @@
+using API.GraphQL.RentalContract.Mutations;
+using API.GraphQL.RentalContract.Queries;
+using API.GraphQL.RentalContract.Types;
+using Application.Interface;
 using Application.Interface.Repositories;
 using Application.Interface.Services;
+using Infrastructure.BackgroundJobs;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
@@ -19,6 +24,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         configuration.GetConnectionString("ApplicationContext"),
         b => b.MigrationsAssembly("Infrastructure"));
 });
+
+builder.Services.AddGraphQLServer()
+        .AddQueryType(d => d.Name("Query"))
+        .AddTypeExtension<RentalContractQueries>()
+        .AddType<RentalContractType>();
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
