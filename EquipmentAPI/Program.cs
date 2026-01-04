@@ -30,8 +30,10 @@ builder.Services.AddGraphQLServer()
         .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<RentalContractQueries>()
         .AddTypeExtension<RentalContractAnalyticsQueries>()
+        .AddTypeExtension<RentalContractChecks>()
         .AddTypeExtension<RentalContractMutations>()
         .AddType<RentalContractType>();
+
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
@@ -78,5 +80,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGraphQL("/graphql");
 
 app.Run();

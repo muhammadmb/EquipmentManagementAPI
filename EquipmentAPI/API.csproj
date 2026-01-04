@@ -23,6 +23,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="GraphQL\SellingContract\Mutations\" />
+    <Folder Include="GraphQL\SellingContract\Queries\" />
+    <Folder Include="GraphQL\SellingContract\Types\" />
+    <Folder Include="GraphQL\Supplier\Mutations\" />
+    <Folder Include="GraphQL\Supplier\Queries\" />
+    <Folder Include="GraphQL\Supplier\Types\" />
+    <Folder Include="GraphQL\Customer\Mutations\" />
+    <Folder Include="GraphQL\Customer\Queries\" />
+    <Folder Include="GraphQL\Customer\Types\" />
+    <Folder Include="GraphQL\Equipment\Mutations\" />
+    <Folder Include="GraphQL\Equipment\Queries\" />
+    <Folder Include="GraphQL\Equipment\Types\" />
     <Folder Include="Validators\" />
   </ItemGroup>
 
