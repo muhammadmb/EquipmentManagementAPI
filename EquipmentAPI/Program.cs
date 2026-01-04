@@ -29,6 +29,7 @@ builder.Services.AddGraphQLServer()
         .AddQueryType(d => d.Name("Query"))
         .AddMutationType(d => d.Name("Mutation"))
         .AddTypeExtension<RentalContractQueries>()
+        .AddTypeExtension<RentalContractAnalyticsQueries>()
         .AddTypeExtension<RentalContractMutations>()
         .AddType<RentalContractType>();
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
