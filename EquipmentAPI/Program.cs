@@ -44,6 +44,7 @@ builder.Services.AddScoped<ISellingContractRepository, SellingContractRepository
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRentalContractService, RentalContractService>();
 builder.Services.AddScoped<IRentalContractAnalyticsService, RentalContractAnalyticsService>();
+builder.Services.AddScoped<ISellingContractService, SellingContractService>();
 builder.Services.AddScoped<ICacheVersionProvider, CacheVersionProvider>();
 
 builder.Services.AddHostedService<ContractExpirationWorker>();
