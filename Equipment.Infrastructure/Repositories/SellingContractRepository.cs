@@ -161,6 +161,28 @@ namespace Infrastructure.Repositories
             return await collection.ToListAsync();
         }
 
+        public async Task<IEnumerable<SellingContract>> GetSoftDeletedSellingContractsByIds(IEnumerable<Guid> ids, string? fields = null)
+        {
+            if (ids == null || !ids.Any())
+            {
+                throw new ArgumentNullException(nameof(ids));
+            }
+
+            IQueryable<SellingContract> collection = _context.Sellings
+                .IgnoreQueryFilters()
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(fields))
+            {
+                collection = collection.ApplyInclude(fields);
+            }
+
+            var result = await collection
+                .Where(sc => ids.Contains(sc.Id))
+                .ToListAsync();
+            return result;
+        }
+
         public async Task<bool> SellingContractExists(Guid id)
         {
             if (id == Guid.Empty)

@@ -14,6 +14,7 @@ namespace Application.Interface.Repositories
         Task<SellingContract> GetSellingContractForUpdate(Guid id, string? fields = null);
 
         Task<IEnumerable<SellingContract>> GetSoftDeletedSellingContracts(SellingContractResourceParameters parameters);
+        Task<IEnumerable<SellingContract>> GetSoftDeletedSellingContractsByIds(IEnumerable<Guid> ids, string? fields = null);
         Task<IEnumerable<SellingContract>> GetSellingContractsByCustomerId(Guid customerId, string? fields = null);
         Task<IEnumerable<SellingContract>> GetSellingContractsByEquipment(Guid equipmentId, string? fields = null);
         Task<IEnumerable<SellingContract>> GetSellingContractsByIds(IEnumerable<Guid> ids, string? fields = null);
