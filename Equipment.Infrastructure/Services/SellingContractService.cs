@@ -68,17 +68,17 @@ namespace Infrastructure.Services
             Guid id,
             string? fields = null)
         {
-            var sellingContract = await _sellingRepository.GetSoftDeletedSellingContractsById(id, fields);
+            var sellingContract = await _sellingRepository.GetSoftDeletedSellingContractById(id, fields);
             return sellingContract.Adapt<SellingContractDto>();
         }
 
-        public async Task<SellingContractDto> GetSellingContractByYear(int year)
+        public async Task<IEnumerable<SellingContractDto>?> GetSellingContractsByYear(int year)
         {
             if (year < 1900 || year > DateTime.UtcNow.Year + 20)
                 throw new ArgumentException("Invalid year spacified.", nameof(year));
 
-            var sellingContract = await _sellingRepository.GetSellingContractByYear(year);
-            return sellingContract.Adapt<SellingContractDto>();
+            var sellingContract = await _sellingRepository.GetSellingContractsByYear(year);
+            return sellingContract.Adapt<IEnumerable<SellingContractDto>>();
         }
 
         public async Task<IEnumerable<SellingContractDto>?> GetSellingContractsByCustomerId(
@@ -159,7 +159,8 @@ namespace Infrastructure.Services
 
         public async Task UpdateSellingContract(Guid id, SellingContractUpdateDto sellingContract)
         {
-            var existingSellingContract = await GetRequiredContractAsync(id);
+            var existingSellingContract = await _sellingRepository.GetSellingContractForUpdate(id) ??
+                throw new KeyNotFoundException($"Selling contract with id {id} not found.");
             await ValidateEquipmentAvailableAsync(sellingContract.EquipmentId);
 
             await _unitOfWork.BeginTransactionAsync();
@@ -195,7 +196,8 @@ namespace Infrastructure.Services
             if (patchDocument is null)
                 throw new ValidationException("Invalid patch document.");
 
-            var sellingContractFromRepo = await GetRequiredContractAsync(id);
+            var sellingContractFromRepo = await _sellingRepository.GetSellingContractForUpdate(id) ?? 
+                throw new KeyNotFoundException($"Selling contract with id {id} not found.");
             var sellingContract = sellingContractFromRepo.Adapt<SellingContractUpdateDto>();
 
             await ValidateCustomerAsync(sellingContract.CustomerId);
@@ -260,7 +262,7 @@ namespace Infrastructure.Services
             await _unitOfWork.BeginTransactionAsync();
             try
             {
-                var deletedSellingContract = await _sellingRepository.GetSoftDeletedSellingContractsById(id)
+                var deletedSellingContract = await _sellingRepository.GetSoftDeletedSellingContractById(id)
                     ?? throw new KeyNotFoundException($"Deleted selling contract with id {id} not found.");
 
                 await ValidateEquipmentAvailableAsync(deletedSellingContract.EquipmentId);

@@ -14,7 +14,7 @@ namespace Application.Interface.Services
         Task<PagedList<SellingContractDto>?> GetSellingContracts(SellingContractResourceParameters parameters);
         Task<SellingContractDto?> GetSellingContractById(Guid id, string? fields = null);
         Task<SellingContractDto?> GetDeletedSellingContractById(Guid id, string? fields = null);
-        Task<SellingContractDto> GetSellingContractByYear(int year);
+        Task<IEnumerable<SellingContractDto>?> GetSellingContractsByYear(int year);
 
         Task<IEnumerable<SellingContractDto>?> GetSellingContractsByCustomerId(Guid customerId, string? fields = null);
         Task<IEnumerable<SellingContractDto>?> GetSellingContractsByEquipmentId(Guid equipmentId, string? fields = null);
