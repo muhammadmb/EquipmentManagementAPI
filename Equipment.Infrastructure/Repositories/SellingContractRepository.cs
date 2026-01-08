@@ -50,10 +50,11 @@ namespace Infrastructure.Repositories
             return result;
         }
 
-        public async Task<SellingContract> GetSellingContractByYear(int year)
+        public async Task<IEnumerable<SellingContract>> GetSellingContractsByYear(int year)
         {
             return await _context.Sellings
-                .FirstOrDefaultAsync(sc => sc.SaleDate.Year == year);
+                .Where(sc => sc.SaleDate.Year == year)
+                .ToListAsync();
         }
 
         public async Task<SellingContract> GetSellingContractForUpdate(Guid id, string? fields = null)

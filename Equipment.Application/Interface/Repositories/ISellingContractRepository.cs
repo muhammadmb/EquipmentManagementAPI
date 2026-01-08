@@ -9,8 +9,8 @@ namespace Application.Interface.Repositories
     {
         Task<PagedList<SellingContract>> GetSellingContracts(SellingContractResourceParameters parameters);
         Task<SellingContract> GetSellingContractById(Guid id, string? fields = null);
-        Task<SellingContract> GetSoftDeletedSellingContractsById(Guid id, string? fields = null);
-        Task<SellingContract> GetSellingContractByYear(int year);
+        Task<SellingContract> GetSoftDeletedSellingContractById(Guid id, string? fields = null);
+        Task<IEnumerable<SellingContract>> GetSellingContractsByYear(int year);
         Task<SellingContract> GetSellingContractForUpdate(Guid id, string? fields = null);
 
         Task<IEnumerable<SellingContract>> GetSoftDeletedSellingContracts(SellingContractResourceParameters parameters);
