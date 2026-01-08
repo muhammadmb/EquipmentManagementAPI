@@ -275,14 +275,14 @@ namespace EquipmentAPI.Tests.UnitTests.SellingContractTests
         public async Task GetDeletedSellingContractById_ReturnsNull_WhenNotDeleted()
         {
             // Act
-            var contract = await _repository.GetSoftDeletedSellingContractsById(_sellingContract2.Id);
+            var contract = await _repository.GetSoftDeletedSellingContractsByIds([_sellingContract2.Id, _sellingContract3.Id]);
 
             // Assert
             contract.Should().BeNull();
         }
 
         [Fact]
-        public async Task GetDeletedSellingContractById_ReturnsNull_WhenNotExists()
+        public async Task GetDeletedSellingContractByIds_ReturnsNull_WhenNotExists()
         {
             // Arrange
             var parameters = new SellingContractResourceParameters
@@ -293,7 +293,7 @@ namespace EquipmentAPI.Tests.UnitTests.SellingContractTests
             };
 
             // Act
-            var contract = await _repository.GetSoftDeletedSellingContractsById(Guid.NewGuid());
+            var contract = await _repository.GetSoftDeletedSellingContractsByIds([Guid.NewGuid()]);
 
             // Assert
             contract.Should().BeNull();
@@ -423,11 +423,11 @@ namespace EquipmentAPI.Tests.UnitTests.SellingContractTests
             _context.ChangeTracker.Clear();
 
             // Act
-            var deleted = await _repository.GetSoftDeletedSellingContractsById(_sellingContract1.Id);
+            var deleted = await _repository.GetSoftDeletedSellingContractsByIds([_sellingContract1.Id]);
 
             //Assert
             deleted.Should().NotBeNull();
-            Assert.NotNull(deleted.DeletedDate);
+            Assert.Contains(deleted, d => d.DeletedDate != null);
         }
 
         [Fact]
