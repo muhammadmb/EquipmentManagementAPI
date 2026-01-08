@@ -98,7 +98,7 @@ namespace Infrastructure.Repositories
             return result;
         }
 
-        public async Task<SellingContract> GetSoftDeletedSellingContractsById(Guid id, string? fields = null)
+        public async Task<SellingContract> GetSoftDeletedSellingContractById(Guid id, string? fields = null)
         {
             if (id == Guid.Empty)
             {
