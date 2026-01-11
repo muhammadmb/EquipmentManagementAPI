@@ -59,7 +59,7 @@ namespace API.Controllers
             Response.Headers.Append("X-Pagination",
                 JsonSerializer.Serialize(sellingContracts.CreatePaginationMetadata()));
 
-            return Ok(sellingContracts.ShapeData(parameters.Fields));
+            return Ok(((IEnumerable<SellingContractDto>)sellingContracts).ShapeData(parameters.Fields));
         }
 
         [HttpGet("collection/({ids})", Name = "GetSellingContractsByIds")]
