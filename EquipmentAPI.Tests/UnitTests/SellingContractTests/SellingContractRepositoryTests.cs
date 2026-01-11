@@ -275,7 +275,8 @@ namespace EquipmentAPI.Tests.UnitTests.SellingContractTests
         public async Task GetDeletedSellingContractById_ReturnsNull_WhenNotDeleted()
         {
             // Act
-            var contract = await _repository.GetSoftDeletedSellingContractsByIds([_sellingContract2.Id, _sellingContract3.Id]);
+            var contract = await _repository
+                .GetSoftDeletedSellingContractById(_sellingContract2.Id);
 
             // Assert
             contract.Should().BeNull();
@@ -296,7 +297,7 @@ namespace EquipmentAPI.Tests.UnitTests.SellingContractTests
             var contract = await _repository.GetSoftDeletedSellingContractsByIds([Guid.NewGuid()]);
 
             // Assert
-            contract.Should().BeNull();
+            contract.Should().BeEmpty();
         }
         #endregion
 
