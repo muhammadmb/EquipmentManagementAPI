@@ -566,6 +566,7 @@ namespace Infrastructure.Services
             }
 
             var deletedContractsCount = await _context.Sellings
+                .IgnoreQueryFilters()
                 .Where(selling =>
                     selling.DeletedDate != null)
                 .CountAsync();
