@@ -48,6 +48,10 @@ namespace Infrastructure.Services
         {
 
             var sellingContracts = await _sellingRepository.GetSellingContracts(parameters);
+
+            if (sellingContracts is null)
+                return null;
+
             var sellingContractsDto = sellingContracts.Adapt<List<SellingContractDto>>();
             return new PagedList<SellingContractDto>(
                 sellingContractsDto,
@@ -60,6 +64,9 @@ namespace Infrastructure.Services
             Guid id,
             string? fields = null)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
             var sellingContract = await _sellingRepository.GetSellingContractById(id, fields);
             return sellingContract.Adapt<SellingContractDto>();
         }
@@ -68,6 +75,9 @@ namespace Infrastructure.Services
             Guid id,
             string? fields = null)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
             var sellingContract = await _sellingRepository.GetSoftDeletedSellingContractById(id, fields);
             return sellingContract.Adapt<SellingContractDto>();
         }
@@ -85,6 +95,9 @@ namespace Infrastructure.Services
             Guid customerId,
             string? fields = null)
         {
+            if (customerId == Guid.Empty)
+                throw new ArgumentNullException(nameof(customerId));
+
             var sellingContracts = await _sellingRepository
                 .GetSellingContractsByCustomerId(customerId, fields);
             return sellingContracts.Adapt<IEnumerable<SellingContractDto>>();
@@ -94,6 +107,9 @@ namespace Infrastructure.Services
             Guid equipmentId,
             string? fields = null)
         {
+            if (equipmentId == Guid.Empty)
+                throw new ArgumentNullException(nameof(equipmentId));
+
             var sellingContracts = await _sellingRepository
                 .GetSellingContractsByEquipment(equipmentId, fields);
             return sellingContracts.Adapt<IEnumerable<SellingContractDto>>();
@@ -111,6 +127,8 @@ namespace Infrastructure.Services
 
         public async Task<IEnumerable<SellingContractDto>?> GetDeletedSellingContracts(SellingContractResourceParameters parameters)
         {
+            ArgumentNullException.ThrowIfNull(parameters);
+
             var sellingContracts = await _sellingRepository
                 .GetSoftDeletedSellingContracts(parameters);
             return sellingContracts.Adapt<IEnumerable<SellingContractDto>>();
@@ -118,10 +136,16 @@ namespace Infrastructure.Services
 
         public async Task<bool> SellingContractExists(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
             return await _sellingRepository.SellingContractExists(id);
         }
         public async Task<bool> CustomerHasContracts(Guid customerId)
         {
+            if (customerId == Guid.Empty)
+                throw new ArgumentNullException(nameof(customerId));
+
             return await _sellingRepository.CustomerHasContracts(customerId);
         }
         #endregion
@@ -159,6 +183,11 @@ namespace Infrastructure.Services
 
         public async Task UpdateSellingContract(Guid id, SellingContractUpdateDto sellingContract)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
+            ArgumentNullException.ThrowIfNull(sellingContract, nameof(sellingContract));
+
             var existingSellingContract = await _sellingRepository.GetSellingContractForUpdate(id) ??
                 throw new KeyNotFoundException($"Selling contract with id {id} not found.");
             await ValidateEquipmentAvailableAsync(sellingContract.EquipmentId);
@@ -196,7 +225,7 @@ namespace Infrastructure.Services
             if (patchDocument is null)
                 throw new ValidationException("Invalid patch document.");
 
-            var sellingContractFromRepo = await _sellingRepository.GetSellingContractForUpdate(id) ?? 
+            var sellingContractFromRepo = await _sellingRepository.GetSellingContractForUpdate(id) ??
                 throw new KeyNotFoundException($"Selling contract with id {id} not found.");
             var sellingContract = sellingContractFromRepo.Adapt<SellingContractUpdateDto>();
 
@@ -237,6 +266,9 @@ namespace Infrastructure.Services
 
         public async Task SoftDeleteSellingContract(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
             var existingSellingContract = await GetRequiredContractAsync(id);
 
             await _unitOfWork.BeginTransactionAsync();
@@ -259,6 +291,9 @@ namespace Infrastructure.Services
 
         public async Task RestoreSellingContract(Guid id)
         {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException(nameof(id));
+
             await _unitOfWork.BeginTransactionAsync();
             try
             {
