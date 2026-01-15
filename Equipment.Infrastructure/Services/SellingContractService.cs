@@ -190,7 +190,10 @@ namespace Infrastructure.Services
 
             var existingSellingContract = await _sellingRepository.GetSellingContractForUpdate(id) ??
                 throw new KeyNotFoundException($"Selling contract with id {id} not found.");
-            await ValidateEquipmentAvailableAsync(sellingContract.EquipmentId);
+            if (existingSellingContract.EquipmentId != sellingContract.EquipmentId)
+            {
+                await ValidateEquipmentAvailableAsync(sellingContract.EquipmentId);
+            }
 
             await _unitOfWork.BeginTransactionAsync();
             try
@@ -229,7 +232,10 @@ namespace Infrastructure.Services
                 throw new KeyNotFoundException($"Selling contract with id {id} not found.");
             var sellingContract = sellingContractFromRepo.Adapt<SellingContractUpdateDto>();
 
-            await ValidateCustomerAsync(sellingContract.CustomerId);
+            if (sellingContractFromRepo.EquipmentId != sellingContract.EquipmentId)
+            {
+                await ValidateEquipmentAvailableAsync(sellingContract.EquipmentId);
+            }
             await _unitOfWork.BeginTransactionAsync();
 
             try
