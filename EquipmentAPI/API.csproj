@@ -23,9 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GraphQL\SellingContract\Mutations\" />
-    <Folder Include="GraphQL\SellingContract\Queries\" />
-    <Folder Include="GraphQL\SellingContract\Types\" />
     <Folder Include="GraphQL\Supplier\Mutations\" />
     <Folder Include="GraphQL\Supplier\Queries\" />
     <Folder Include="GraphQL\Supplier\Types\" />

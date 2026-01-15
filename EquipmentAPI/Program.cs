@@ -33,6 +33,7 @@ builder.Services.AddGraphQLServer()
         .AddTypeExtension<RentalContractChecks>()
         .AddTypeExtension<RentalContractMutations>()
         .AddType<RentalContractType>();
+        .AddType<SellingContractType>();
 
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
