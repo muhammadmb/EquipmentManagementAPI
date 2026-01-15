@@ -59,6 +59,11 @@ namespace API.Controllers
             Response.Headers.Append("X-Pagination",
                 JsonSerializer.Serialize(sellingContracts.CreatePaginationMetadata()));
 
+            if (sellingContracts == null)
+            {
+                return Ok();
+            }
+
             return Ok(((IEnumerable<SellingContractDto>)sellingContracts).ShapeData(parameters.Fields));
         }
 
@@ -103,6 +108,15 @@ namespace API.Controllers
             }
 
             var sellingContract = await _sellingContractService.GetSellingContractById(id, fields);
+
+            if (sellingContract == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Selling contract with id: {id} not found"
+                });
+            }
+
             return Ok(sellingContract.ShapeData(fields));
         }
 
@@ -122,6 +136,15 @@ namespace API.Controllers
 
             var sellingContracts = await _sellingContractService
                 .GetSellingContractsByCustomerId(customerId, fields);
+
+            if (sellingContracts == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Selling contract with ids not found"
+                });
+            }
+
             return Ok(sellingContracts.ShapeData(fields));
         }
 
@@ -140,12 +163,21 @@ namespace API.Controllers
             }
             var sellingContracts = await _sellingContractService
                 .GetSellingContractsByEquipmentId(equipmentId, fields);
+
+            if (sellingContracts == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Selling contract for equipment: {equipmentId} not found"
+                });
+            }
+
             return Ok(sellingContracts.ShapeData(fields));
         }
 
-        [HttpGet("year", Name = "GetSellingContractByYear")]
-        [HttpHead("year")]
-        public async Task<IActionResult> GetSellingContractByYear([FromQuery] int year)
+        [HttpGet("{year:int}", Name = "GetSellingContractByYear")]
+        [HttpHead("{year:int}")]
+        public async Task<IActionResult> GetSellingContractByYear([FromRoute] int year)
         {
             if (year < 0 || year > DateTimeOffset.UtcNow.Year)
             {
@@ -156,6 +188,15 @@ namespace API.Controllers
                 });
             }
             var sellingContracts = await _sellingContractService.GetSellingContractsByYear(year);
+
+            if (sellingContracts == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Selling contract for year: {year} not found"
+                });
+            }
+
             return Ok(sellingContracts);
         }
 
@@ -183,6 +224,15 @@ namespace API.Controllers
             }
 
             var sellingContracts = await _sellingContractService.GetDeletedSellingContracts(parameters);
+
+            if (sellingContracts == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Seleted selling contract not found"
+                });
+            }
+
             return Ok(sellingContracts.ShapeData(parameters.Fields));
         }
 
@@ -200,6 +250,15 @@ namespace API.Controllers
                 });
             }
             var sellingContract = await _sellingContractService.GetDeletedSellingContractById(id, fields);
+
+            if (sellingContract == null)
+            {
+                return NotFound(new ErrorResponse
+                {
+                    Error = $"Deleted selling contract with Id: {id} not found"
+                });
+            }
+
             return Ok(sellingContract.ShapeData(fields));
         }
         #endregion
@@ -332,9 +391,9 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("collection/{ids}")]
+        [HttpDelete("collection/({ids})")]
         public async Task<IActionResult> SoftDeleteSellingContracts(
-            [FromQuery][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+            [FromRoute][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
         {
             if (ids is null || !ids.Any())
             {
@@ -372,9 +431,9 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [HttpPost("collection/{ids}/restore")]
+        [HttpPost("collection/({ids})/restore")]
         public async Task<IActionResult> RestoreSellingContracts(
-            [FromBody][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+            [FromRoute][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
         {
             if (ids is null || !ids.Any())
             {
@@ -449,6 +508,13 @@ namespace API.Controllers
         public async Task<IActionResult> GetRevenueByMonth(
             [FromQuery] int year)
         {
+            if (year < 1900 || year > DateTime.UtcNow.Year)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Error = $"Year must be between 1900 and {DateTime.UtcNow.Year}."
+                });
+            }
             return Ok(await _sellingContractAnalyticsService.GetRevenueByMonth(year));
         }
 
@@ -506,7 +572,7 @@ namespace API.Controllers
             [FromQuery] DateTimeOffset? to)
         {
             if (top <= 0 || top > 100) return BadRequest(new ErrorResponse { Error = "Top parameter must be between 1 and 100." });
-                return Ok(await _sellingContractAnalyticsService.GetTopSellingEquipment(top, from, to));
+            return Ok(await _sellingContractAnalyticsService.GetTopSellingEquipment(top, from, to));
         }
 
         [HttpGet("analytics/sales-count-by-equipment")]
