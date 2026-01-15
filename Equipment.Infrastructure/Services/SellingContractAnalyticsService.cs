@@ -92,7 +92,7 @@ namespace Infrastructure.Services
             return averageSalePrice;
         }
 
-        public async Task<decimal> GetAverageSalePriceByEquipment(
+        public async Task<IDictionary<Guid, decimal>> GetAverageSalePriceByEquipment(
             DateTimeOffset? from,
             DateTimeOffset? to,
             EquipmentBrand? equipmentBrand,
@@ -108,7 +108,7 @@ namespace Infrastructure.Services
 
             if (!string.IsNullOrEmpty(cachedValue))
             {
-                return CacheHelper.Deserialize<decimal>(cachedValue);
+                return CacheHelper.Deserialize<IDictionary<Guid, decimal>>(cachedValue);
             }
 
             var query = _context.Sellings
@@ -131,7 +131,14 @@ namespace Infrastructure.Services
             {
                 query = query.Where(selling => selling.Equipment.EquipmentType == equipmentType);
             }
-            var averageSalePriceByEquipment = await query.AverageAsync(selling => selling.SalePrice);
+            var averageSalePriceByEquipment = await query
+                .GroupBy(s => s.EquipmentId)
+                .Select(g => new
+                {
+                    EquipmentId = g.Key,
+                    AveragePrice = g.Average(x => x.SalePrice)
+                })
+                .ToDictionaryAsync(x => x.EquipmentId, x => x.AveragePrice);
 
             await _cache.SetStringAsync(
                  cacheKey,

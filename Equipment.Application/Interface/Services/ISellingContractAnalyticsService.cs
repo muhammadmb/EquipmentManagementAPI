@@ -7,7 +7,7 @@ namespace Application.Interface.Services
     {
         Task<decimal> GetTotalRevenue(DateTimeOffset? from, DateTimeOffset? to);
         Task<decimal> GetAverageSalePrice(DateTimeOffset? from, DateTimeOffset? to);
-        Task<decimal> GetAverageSalePriceByEquipment(DateTimeOffset? from, DateTimeOffset? to, EquipmentBrand? equipmentBrand, EquipmentType? equipmentType);
+        Task<IDictionary<Guid, decimal>> GetAverageSalePriceByEquipment(DateTimeOffset? from, DateTimeOffset? to, EquipmentBrand? equipmentBrand, EquipmentType? equipmentType);
         Task<decimal> GetMinSalePrice(DateTimeOffset? from, DateTimeOffset? to);
         Task<decimal> GetMaxSalePrice(DateTimeOffset? from, DateTimeOffset? to);
 
