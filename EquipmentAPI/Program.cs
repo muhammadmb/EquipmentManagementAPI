@@ -1,6 +1,8 @@
 using API.GraphQL.RentalContract.Mutations;
 using API.GraphQL.RentalContract.Queries;
 using API.GraphQL.RentalContract.Types;
+using API.GraphQL.SellingContract.Queries;
+using API.GraphQL.SellingContract.Types;
 using Application.Interface;
 using Application.Interface.Repositories;
 using Application.Interface.Services;
@@ -28,12 +30,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddGraphQLServer()
         .AddQueryType(d => d.Name("Query"))
         .AddMutationType(d => d.Name("Mutation"))
+
         .AddTypeExtension<RentalContractQueries>()
         .AddTypeExtension<RentalContractAnalyticsQueries>()
         .AddTypeExtension<RentalContractChecks>()
         .AddTypeExtension<RentalContractMutations>()
-        .AddType<RentalContractType>();
+        .AddType<RentalContractType>()
+
+        .AddTypeExtension<SellingContractQueries>()
         .AddType<SellingContractType>();
+
 
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
