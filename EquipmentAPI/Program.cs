@@ -39,6 +39,7 @@ builder.Services.AddGraphQLServer()
 
         .AddTypeExtension<SellingContractQueries>()
         .AddTypeExtension<SellingContractAnalyticsQueries>()
+        .AddTypeExtension<SellingContractCheckQueries>()
         .AddType<SellingContractType>();
 
 
