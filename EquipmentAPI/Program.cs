@@ -1,6 +1,7 @@
 using API.GraphQL.RentalContract.Mutations;
 using API.GraphQL.RentalContract.Queries;
 using API.GraphQL.RentalContract.Types;
+using API.GraphQL.SellingContract.Mutations;
 using API.GraphQL.SellingContract.Queries;
 using API.GraphQL.SellingContract.Types;
 using Application.Interface;
@@ -40,6 +41,7 @@ builder.Services.AddGraphQLServer()
         .AddTypeExtension<SellingContractQueries>()
         .AddTypeExtension<SellingContractAnalyticsQueries>()
         .AddTypeExtension<SellingContractCheckQueries>()
+        .AddTypeExtension<SellingContractMutations>()
         .AddType<SellingContractType>();
 
 
