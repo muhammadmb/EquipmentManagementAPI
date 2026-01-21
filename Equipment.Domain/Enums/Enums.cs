@@ -159,7 +159,8 @@ namespace Domain.Enums
     {
         Available,
         Sold,
-        Rented
+        Rented,
+        UnderMaintenance
     }
 
     public enum RentalContractStatus
