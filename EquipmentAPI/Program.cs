@@ -51,6 +51,7 @@ builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>()
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IEquipmentAnalyticsService, EquipmentAnalyticsService>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IRentalContractRepository, RentalContractRepository>();
