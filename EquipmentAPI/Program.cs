@@ -7,10 +7,12 @@ using API.GraphQL.SellingContract.Types;
 using Application.Interface;
 using Application.Interface.Repositories;
 using Application.Interface.Services;
+using Application.Interface.Services.EquipmentService;
 using Infrastructure.BackgroundJobs;
 using Infrastructure.Contexts;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.Services.EquipmentService;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
@@ -48,6 +50,7 @@ builder.Services.AddGraphQLServer()
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
 builder.Services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IRentalContractRepository, RentalContractRepository>();
